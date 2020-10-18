@@ -115,7 +115,7 @@ namespace Wox
             var items = menu.Items;
 
             var open = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayOpen"));
-            open.Click += (o, e) => Visibility = Visibility.Visible;
+            open.Click += (o, e) => _viewModel.MainWindowVisibility = Visibility.Visible;
             var setting = items.Add(InternationalizationManager.Instance.GetTranslation("iconTraySettings"));
             setting.Click += (o, e) => App.API.OpenSettingDialog();
             var exit = items.Add(InternationalizationManager.Instance.GetTranslation("iconTrayExit"));
@@ -126,14 +126,13 @@ namespace Wox
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    if (menu.Visible)
+                    if (_viewModel.MainWindowVisibility == Visibility.Visible)
                     {
-                        menu.Close();
+                        _viewModel.MainWindowVisibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        var p = System.Windows.Forms.Cursor.Position;
-                        menu.Show(p);
+                        _viewModel.MainWindowVisibility = Visibility.Visible;
                     }
                 }
             };
